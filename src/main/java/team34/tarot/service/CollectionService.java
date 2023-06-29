@@ -1,6 +1,7 @@
 package team34.tarot.service;
 
 import java.util.List;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import team34.tarot.dto.FortuneLogDto;
@@ -22,6 +23,7 @@ public class CollectionService {
 	private final TomorrowFortuneRepository tomorrowFortuneRepository;
 
 
+	@Transactional
 	public CollectionResponse getCollection(Long userId) {
 		TarotCollection tarotCollection = tarotCollectionRepository.findById(userId).orElseThrow();
 
@@ -38,5 +40,5 @@ public class CollectionService {
 		});
 		return collectionResponse;
 	}
-	
+
 }

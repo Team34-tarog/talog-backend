@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team34.tarot.dto.request.PostDiaryRequest;
 
 @Getter
 @NoArgsConstructor
@@ -51,4 +52,8 @@ public class User {
 
 	@OneToOne(mappedBy = "user")
 	private TarotCollection tarotCollection;
+
+	public void addDiary(PostDiaryRequest request) {
+		diaryList.add(new Diary(this, request.getCreatedAt(), request.getContent()));
+	}
 }
