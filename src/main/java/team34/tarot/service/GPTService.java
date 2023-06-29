@@ -4,7 +4,6 @@ import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.service.OpenAiService;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import team34.tarot.dto.gptdto.request.CompletionChatRequest;
@@ -16,7 +15,6 @@ public class GPTService {
 
 	private final OpenAiService openAiService;
 
-	@Transactional
 	public List<String> gptCompletionChat(CompletionChatRequest request) {
 		ChatCompletionResult chatCompletion = openAiService.createChatCompletion(
 						CompletionChatRequest.of(request));
