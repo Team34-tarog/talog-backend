@@ -47,9 +47,11 @@ public class DiaryService {
 	public int pickTarotCard(Long userId, PickTarotCardRequest request) {
 		User user = userRepository.findById(userId).orElseThrow();
 		if (user.getTarotCollection() == null) {
-			tarotCollectionRepository.save(new TarotCollection(user));
+			user.saveTarotCollection(new TarotCollection(user));
+			//			tarotCollectionRepository.save(new TarotCollection(user));
 		}
 		TarotCard tarotCard = TarotCardSetSingleton.getInstance().getTarotCard(getRandomNumber());
+
 		Tarot tarot = tarotRepository.findByTarotCollectionIdAndNumber(user.getTarotCollection().getId(),
 						tarotCard.getNumber());
 		if (tarot == null) {
@@ -63,7 +65,10 @@ public class DiaryService {
 
 	@Transactional
 	public DiaryResponse getDiary(Long userId, LocalDate date) {
-		return new DiaryResponse();
+		Diary diary = diaryRepository.findByCreatedAtAndUserId(date, userId).orElseThrow();
+		TomorrowFortune tomorrowFortune = tomorrowFortuneRepository.findByDiaryId(diary.getId()).orElseThrow();
+		Tarot tarot = tarotRepository.findById(tomorrowFortune.getTarot().getId()).orElseThrow();
+		return new DiaryResponse(diary, tomorrowFortune, tarot);
 	}
 
 	private int getRandomNumber() {

@@ -2,6 +2,7 @@ package team34.tarot.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -46,10 +47,14 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
 	private List<Diary> diaryList = new ArrayList<>();
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private TarotCollection tarotCollection;
 
 	public void addDiary(PostDiaryRequest request) {
 		diaryList.add(new Diary(this, request.getCreatedAt(), request.getContent()));
+	}
+
+	public void saveTarotCollection(TarotCollection tarotCollection) {
+		this.tarotCollection = tarotCollection;
 	}
 }
