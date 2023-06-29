@@ -39,10 +39,9 @@ public class DiaryService {
 		User user = userRepository.findById(userId).orElseThrow();
 		user.addDiary(request);
 		new ChatMessage("system",
-						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender().toString(), user.getAge()));
+						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender(), user.getAge()));
 		//gpt 내일의 운세 해석 request
 		// 내일의 운세 해석 결과 저장
-		System.out.println(user.getGender().toString());
 		return null;
 	}
 

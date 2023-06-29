@@ -1,5 +1,8 @@
 package team34.tarot.utils;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public class TarotCardSetSingleton {
 
 	private static final TarotCardSetSingleton standard = new TarotCardSetSingleton();
@@ -64,5 +67,17 @@ public class TarotCardSetSingleton {
 
 	public TarotCard getTarotCard(int index) {
 		return tarotCardSet[index - 1];
+	}
+
+	public TarotCard findTarotCardByNumber(int number) {
+		Optional<TarotCard> foundCard = Arrays.stream(tarotCardSet)
+						.filter(card -> card.getNumber() == number)
+						.findFirst();
+
+		if (foundCard.isPresent()) {
+			return foundCard.get();
+		} else {
+			throw new IllegalArgumentException("No such card with number " + number);
+		}
 	}
 }
