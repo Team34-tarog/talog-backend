@@ -25,8 +25,7 @@ public class CollectionService {
 
 	@Transactional
 	public CollectionResponse getCollection(Long userId) {
-		TarotCollection tarotCollection = tarotCollectionRepository.findById(userId).orElseThrow();
-
+		TarotCollection tarotCollection = tarotCollectionRepository.findByUserId(userId).orElseThrow();
 		CollectionResponse collectionResponse = new CollectionResponse(tarotCollection.getId());
 		List<Tarot> tarots = tarotRepository.findAllByTarotCollectionId(tarotCollection.getId());
 		tarots.forEach(tarot -> {

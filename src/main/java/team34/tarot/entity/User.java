@@ -1,23 +1,19 @@
 package team34.tarot.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import team34.tarot.dto.request.PostDiaryRequest;
 import team34.tarot.dto.request.PostQuestionRequest;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "user")
 @Entity
@@ -42,17 +38,20 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
+	//	created_at DATETIME
+	private LocalDateTime createdAt;
+
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	@OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
-	private List<Diary> diaryList = new ArrayList<>();
+	private List<Diary> diaryList;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private TarotCollection tarotCollection;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Qna> qnaList = new ArrayList<>();
+	private List<Qna> qnaList;
 
 	public void addDiary(PostDiaryRequest request) {
 		diaryList.add(new Diary(this, request.getCreatedAt(), request.getContent()));
@@ -64,6 +63,6 @@ public class User {
 
 	public void addQna(PostQuestionRequest request) {
 		qnaList.add(new Qna(this, request.getQuestion(), request.getFirstCardNumber(), request.getSecondCardNumber(),
-						request.getThirdCardNumber()));
+				request.getThirdCardNumber()));
 	}
 }
