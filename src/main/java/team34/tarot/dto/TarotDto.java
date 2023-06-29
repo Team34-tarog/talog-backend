@@ -12,12 +12,12 @@ public class TarotDto {
 
 	private Long tarotId;
 	private int tarotNumber;
-	private String defaultDiscription;
+	private String defaultDescription;
 	private List<FortuneLogDto> fortuneLogs = new ArrayList<>();
 
 	public TarotDto(Tarot tarot) {
 		this.tarotId = tarot.getId();
 		this.tarotNumber = tarot.getNumber();
-		this.defaultDiscription = tarot.getDiscription();
+		this.defaultDescription = tarot.getDescription();
 	}
 }

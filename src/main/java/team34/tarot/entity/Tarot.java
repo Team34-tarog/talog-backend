@@ -29,14 +29,14 @@ public class Tarot {
 	private int number;
 
 	private String name;
-	
+
 	private String type;
 
 	@Column(columnDefinition = "TEXT")
-	private String discription;
+	private String description;
 
 	@Column(columnDefinition = "TEXT")
-	private String fullDiscription;
+	private String fullDescription;
 
 	@OneToOne(mappedBy = "tarot")
 	private TomorrowFortune tomorrowFortune;

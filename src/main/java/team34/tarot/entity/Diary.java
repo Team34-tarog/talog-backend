@@ -39,7 +39,6 @@ public class Diary {
 
 	public Diary(User user, LocalDateTime createdAt, String content) {
 		this.user = user;
-		System.out.println(createdAt + "df");
 		this.createdAt = createdAt;
 		this.content = content;
 	}
