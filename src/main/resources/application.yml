@@ -15,12 +15,12 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_DATABASE_URL}
-    username: ${MYSQL_DATABASE_USERNAME}
-    password: ${MYSQL_DATABASE_PASSWORD}
-#    url: jdbc:mysql://localhost:3306/talog
-#    username: root
-#    password: anso33
+    #    url: ${MYSQL_DATABASE_URL}
+    #    username: ${MYSQL_DATABASE_USERNAME}
+    #    password: ${MYSQL_DATABASE_PASSWORD}
+    url: jdbc:mysql://localhost:3306/talog
+    username: root
+    password: anso33
 
   jpa:
     hibernate:
@@ -37,7 +37,7 @@ spring:
 
 gpt:
   api:
-    key: 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
+    key: ${GPT_API_KEY}
 
 server:
   port: 8080
