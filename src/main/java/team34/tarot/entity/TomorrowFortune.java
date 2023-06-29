@@ -1,6 +1,7 @@
 package team34.tarot.entity;
 
 import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class TomorrowFortune {
 	@JoinColumn(name = "tarot_id")
 	private Tarot tarot;
 
+	@Column(columnDefinition = "TEXT")
 	private String content;
 
 	private LocalDate date;
