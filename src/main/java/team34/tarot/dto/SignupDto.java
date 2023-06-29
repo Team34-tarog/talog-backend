@@ -12,6 +12,6 @@ public class SignupDto {
     String username;
     String password;
     String nickname;
-    Long age;
+    int age;
     String gender;
 }

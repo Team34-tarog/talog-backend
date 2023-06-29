@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/ml")
 public class AIController {
 
-/*    @PostMapping("/model")
-    public String model() {
+/*    @PostMapping("/send")
+    public String send() {
 
     }*/
 }
