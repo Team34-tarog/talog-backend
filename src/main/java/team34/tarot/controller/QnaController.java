@@ -1,6 +1,7 @@
 package team34.tarot.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,12 +23,12 @@ public class QnaController {
 
 	private final QnaService qnaService;
 
-	@PostMapping("question/")
-	public void postQuestion(@RequestBody PostQuestionRequest request) {
+	@PostMapping("/question")
+	public List<String> postQuestion(@RequestBody PostQuestionRequest request) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails userDetails = (CustomUserDetails) principal;
 		Long userId = (userDetails).getId();
-		qnaService.postQuestion(userId, request);
+		return qnaService.postQuestion(userId, request);
 	}
 
 	@GetMapping("")
