@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team34.tarot.auth.CustomUserDetails;
-import team34.tarot.dto.request.PickTarotCardRequest;
 import team34.tarot.dto.request.PostDiaryRequest;
 import team34.tarot.dto.response.DiaryResponse;
 import team34.tarot.dto.response.TomorrowFortuneResponse;
@@ -32,13 +31,13 @@ public class DiaryController {
 		return diaryService.postDiary(userId, request);
 	}
 
-	@PostMapping("/tomorrow-fortune")
-	public int pickTarotCard(@RequestBody PickTarotCardRequest request) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		CustomUserDetails userDetails = (CustomUserDetails) principal;
-		Long userId = (userDetails).getId();
-		return diaryService.pickTarotCard(userId, request);
-	}
+	//	@PostMapping("/tomorrow-fortune")
+	//	public int pickTarotCard(@RequestBody PickTarotCardRequest request) {
+	//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	//		CustomUserDetails userDetails = (CustomUserDetails) principal;
+	//		Long userId = (userDetails).getId();
+	//		return diaryService.pickTarotCard(userId, request);
+	//	}
 
 	@GetMapping("")
 	public DiaryResponse getDiary(

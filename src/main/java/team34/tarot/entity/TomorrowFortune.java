@@ -35,9 +35,10 @@ public class TomorrowFortune {
 
 	private LocalDate date;
 
-	public TomorrowFortune(Diary diary, Tarot tarot) {
+	public TomorrowFortune(Diary diary, Tarot tarot, String content) {
 		this.diary = diary;
 		this.tarot = tarot;
+		this.content = content;
 		this.date = LocalDate.now();
 	}
 }

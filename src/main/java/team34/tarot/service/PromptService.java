@@ -37,7 +37,7 @@ public class PromptService {
 
 	public String userSummaryInputPromptStr(String username) {
 		return String.format(
-						"Reduce your interpretation to 500 characters, focusing on %s's personal experiences and personality.",
+						"Summarize your interpretation to 500 characters, focusing on %s's personal experiences and personality.",
 						username);
 	}
 
@@ -74,7 +74,7 @@ public class PromptService {
 	}
 
 	public String userTranslation() {
-		return "Similar in length, please do your best to translate into Korean without changing the original meaning.\n"
+		return "Similar in length, Do your best to translate into Korean without changing the original meaning.\n"
 						+ "\n"
 						+ "Make the translation result natural.";
 	}
