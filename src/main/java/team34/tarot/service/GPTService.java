@@ -21,10 +21,8 @@ public class GPTService {
 
 		CompletionChatResponse response = CompletionChatResponse.of(chatCompletion);
 
-		List<String> messages = response.getMessages().stream()
+		return response.getMessages().stream()
 						.map(CompletionChatResponse.Message::getMessage)
 						.collect(Collectors.toList());
-
-		return messages;
 	}
 }

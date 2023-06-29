@@ -1,11 +1,17 @@
 package team34.tarot.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
-
-import lombok.Builder;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +39,7 @@ public class User {
 	private String nickname;
 
 	//	age INT
-	private Long age;
+	private int age;
 
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
@@ -63,6 +69,6 @@ public class User {
 
 	public void addQna(PostQuestionRequest request) {
 		qnaList.add(new Qna(this, request.getQuestion(), request.getFirstCardNumber(), request.getSecondCardNumber(),
-				request.getThirdCardNumber()));
+						request.getThirdCardNumber()));
 	}
 }

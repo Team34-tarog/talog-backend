@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import team34.tarot.dto.request.PickTarotCardRequest;
 import team34.tarot.dto.request.PostDiaryRequest;
 import team34.tarot.dto.response.DiaryResponse;
+import team34.tarot.dto.response.TomorrowFortuneResponse;
 import team34.tarot.entity.Diary;
 import team34.tarot.entity.Tarot;
 import team34.tarot.entity.TarotCollection;
@@ -30,17 +31,17 @@ public class DiaryService {
 	private final TarotRepository tarotRepository;
 	private final DiaryRepository diaryRepository;
 	private final TomorrowFortuneRepository tomorrowFortuneRepository;
-
-	public void getDiary() {
-
-		// TODO - implement DiaryService.getDiary
-		throw new UnsupportedOperationException();
-	}
+	private final PromptService promptService;
 
 	@Transactional
-	public void postDiary(Long userId, PostDiaryRequest request) {
+	public TomorrowFortuneResponse postDiary(Long userId, PostDiaryRequest request) {
 		User user = userRepository.findById(userId).orElseThrow();
 		user.addDiary(request);
+		//		new ChatMessage("system",
+		//						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender(), user.getAge()));
+		//gpt 내일의 운세 해석 request
+		// 내일의 운세 해석 결과 저장
+		return null;
 	}
 
 	@Transactional
