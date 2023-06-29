@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team34.tarot.dto.request.PostDiaryRequest;
+import team34.tarot.dto.request.PostQuestionRequest;
 
 @Getter
 @NoArgsConstructor
@@ -50,11 +51,19 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private TarotCollection tarotCollection;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Qna> qnaList = new ArrayList<>();
+
 	public void addDiary(PostDiaryRequest request) {
 		diaryList.add(new Diary(this, request.getCreatedAt(), request.getContent()));
 	}
 
 	public void saveTarotCollection(TarotCollection tarotCollection) {
 		this.tarotCollection = tarotCollection;
+	}
+
+	public void addQna(PostQuestionRequest request) {
+		qnaList.add(new Qna(this, request.getQuestion(), request.getFirstCardNumber(), request.getSecondCardNumber(),
+						request.getThirdCardNumber()));
 	}
 }
