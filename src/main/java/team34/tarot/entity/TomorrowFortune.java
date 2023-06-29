@@ -1,6 +1,6 @@
 package team34.tarot.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,11 +31,11 @@ public class TomorrowFortune {
 
 	private String content;
 
-	private LocalDateTime dateTime;
+	private LocalDate date;
 
 	public TomorrowFortune(Diary diary, Tarot tarot) {
 		this.diary = diary;
 		this.tarot = tarot;
-		this.dateTime = LocalDateTime.now();
+		this.date = LocalDate.now();
 	}
 }

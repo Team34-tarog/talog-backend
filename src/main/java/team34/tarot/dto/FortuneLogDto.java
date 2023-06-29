@@ -13,7 +13,7 @@ public class FortuneLogDto {
 	private String log;
 
 	public FortuneLogDto(TomorrowFortune log) {
-		this.date = log.getDateTime().toLocalDate();
+		this.date = log.getDate();
 		this.log = log.getContent();
 	}
 }

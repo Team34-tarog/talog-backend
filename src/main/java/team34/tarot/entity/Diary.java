@@ -1,6 +1,6 @@
 package team34.tarot.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,12 +32,12 @@ public class Diary {
 
 	private String image;
 
-	private LocalDateTime createdAt;
+	private LocalDate createdAt;
 
 	@OneToOne(mappedBy = "diary")
 	private TomorrowFortune tomorrowFortune;
 
-	public Diary(User user, LocalDateTime createdAt, String content) {
+	public Diary(User user, LocalDate createdAt, String content) {
 		this.user = user;
 		this.createdAt = createdAt;
 		this.content = content;

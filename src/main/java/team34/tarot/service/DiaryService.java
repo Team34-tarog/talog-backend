@@ -1,11 +1,13 @@
 package team34.tarot.service;
 
+import java.time.LocalDate;
 import java.util.Random;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import team34.tarot.dto.request.PickTarotCardRequest;
 import team34.tarot.dto.request.PostDiaryRequest;
+import team34.tarot.dto.response.DiaryResponse;
 import team34.tarot.entity.Diary;
 import team34.tarot.entity.Tarot;
 import team34.tarot.entity.TarotCollection;
@@ -57,6 +59,11 @@ public class DiaryService {
 		Diary diary = diaryRepository.findById(request.getDiaryId()).orElseThrow();
 		tomorrowFortuneRepository.save(new TomorrowFortune(diary, tarot));
 		return tarot.getNumber();
+	}
+
+	@Transactional
+	public DiaryResponse getDiary(Long userId, LocalDate date) {
+		return new DiaryResponse();
 	}
 
 	private int getRandomNumber() {

@@ -1,6 +1,5 @@
 package team34.tarot.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -40,9 +39,6 @@ public class User {
 
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-
-	//	created_at DATETIME
-	private LocalDateTime createdAt;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
