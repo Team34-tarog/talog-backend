@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 @Builder
 @Getter
@@ -46,13 +47,14 @@ public class User {
 	private Gender gender;
 
 	//	created_at DATETIME
+	@CreatedDate
 	private LocalDateTime createdAt;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	@OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
-	private List<Diary> diaryList = new ArrayList<>();
+	private List<Diary> diaryList;
 
 	@OneToOne(mappedBy = "user")
 	private TarotCollection tarotCollection;

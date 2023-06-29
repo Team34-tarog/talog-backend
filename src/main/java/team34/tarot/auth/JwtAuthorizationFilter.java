@@ -25,6 +25,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("filter");
         String prefixJwt = request.getHeader(TokenProvider.HEADER);
 
         if(prefixJwt == null) {
