@@ -3,19 +3,18 @@ package team34.tarot.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import team34.tarot.auth.JwtAuthorizationFilter;
 import team34.tarot.auth.TokenProvider;
 import team34.tarot.handler.JwtAccessDeniedHandler;
 import team34.tarot.handler.JwtAuthenticationEntryPoint;
+import team34.tarot.repository.UserRepository;
 
 @Configuration
 public class SecurityConfig {
@@ -24,12 +23,14 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final UserRepository userRepository;
 
-    public SecurityConfig(CorsFilter corsFilter, TokenProvider tokenProvider, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+    public SecurityConfig(CorsFilter corsFilter, TokenProvider tokenProvider, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, UserRepository userRepository) {
         this.corsFilter = corsFilter;
         this.tokenProvider = tokenProvider;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.userRepository = userRepository;
     }
 
 
@@ -44,10 +45,17 @@ public class SecurityConfig {
     }
 
     public static class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+        private final UserRepository userRepository;
+
+        public CustomSecurityFilterManager(UserRepository userRepository) {
+            this.userRepository = userRepository;
+        }
+
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-            builder.addFilter(new JwtAuthorizationFilter(authenticationManager));
+            builder.addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository));
+//            builder.addFilter()
             super.configure(builder);
         }
     }
@@ -69,7 +77,7 @@ public class SecurityConfig {
                     exception.accessDeniedHandler(new JwtAccessDeniedHandler())
                             .authenticationEntryPoint(new JwtAuthenticationEntryPoint());
                 })
-                .apply(new CustomSecurityFilterManager());
+                .apply(new CustomSecurityFilterManager(userRepository));
         System.out.println("1234");
         return http.build();
 

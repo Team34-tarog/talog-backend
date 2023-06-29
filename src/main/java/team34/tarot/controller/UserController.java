@@ -1,10 +1,11 @@
 package team34.tarot.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+import team34.tarot.auth.CustomUserDetails;
 import team34.tarot.dto.SignupDto;
 import team34.tarot.handler.DuplicateMemberException;
 import team34.tarot.repository.UserRepository;
@@ -34,7 +35,15 @@ public class UserController {
         Map<HttpStatus, String> response;
 
         userService.join(request);
+    }
 
-
+    @GetMapping("/user")
+    public ResponseEntity<String> user() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) principal;
+        String username = (userDetails).getUsername();
+        System.out.println(username);
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+        return ResponseEntity.ok().body(((UserDetails) principal).getUsername());
     }
 }
