@@ -2,6 +2,7 @@ package team34.tarot.service;
 
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import org.springframework.stereotype.Service;
+import team34.tarot.dto.request.DiaryInputPromptRequest;
 import team34.tarot.dto.request.UserInputPromptRequest;
 
 @Service
@@ -14,6 +15,9 @@ public class PromptService {
         return s;
     }
 
-    public String systemDiaryInput(Diary)
+    public String systemDiaryInput(DiaryInputPromptRequest request) {
+        String str = "The following is a [diary] written on "+request.getCreatedAt()+" by "+request.getNickname()+". Analyze the contents of the [diary] to remember how "+request.getNickname() +"was feeling and what "+request.getGender() +"was going through, which you must then incorporate into your tarot reading.\n" +
+                "[diary] = "+request.getContent();
+    }
 
 }
