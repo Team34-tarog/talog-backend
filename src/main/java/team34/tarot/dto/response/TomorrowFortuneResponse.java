@@ -1,5 +1,6 @@
 package team34.tarot.dto.response;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,5 +8,5 @@ import lombok.Getter;
 @Getter
 public class TomorrowFortuneResponse {
 
-	private String tomorrowFortune;
+	private List<String> tomorrowFortune;
 }

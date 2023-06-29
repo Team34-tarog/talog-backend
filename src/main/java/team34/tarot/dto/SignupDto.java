@@ -9,9 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SignupDto {
 
-	String username;
-	String password;
-	String nickname;
-	int age;
-	String gender;
+    String username;
+    String password;
+    String nickname;
+    int age;
+    String gender;
 }

@@ -40,12 +40,14 @@ public class Qna {
 
 	private LocalDateTime datetime;
 
-	public Qna(User user, String question, int firstCardNumber, int secondCardNumber, int thirdCardNumber) {
+	public Qna(User user, String question, int firstCardNumber, int secondCardNumber, int thirdCardNumber,
+					String answer) {
 		this.user = user;
 		this.question = question;
 		this.firstTarotNumber = firstCardNumber;
 		this.secondTarotNumber = secondCardNumber;
 		this.thirdTarotNumber = thirdCardNumber;
 		this.datetime = LocalDateTime.now();
+		this.answer = answer;
 	}
 }
