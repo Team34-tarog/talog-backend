@@ -34,7 +34,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
     implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
-
     implementation 'com.theokanning.openai-gpt3-java:service:0.12.0'
 }
 
