@@ -1,5 +1,6 @@
 package team34.tarot.service;
 
+import com.theokanning.openai.completion.chat.ChatMessage;
 import java.time.LocalDate;
 import java.util.Random;
 import javax.transaction.Transactional;
@@ -31,17 +32,14 @@ public class DiaryService {
 	private final TarotRepository tarotRepository;
 	private final DiaryRepository diaryRepository;
 	private final TomorrowFortuneRepository tomorrowFortuneRepository;
-
-	public void getDiary() {
-
-		// TODO - implement DiaryService.getDiary
-		throw new UnsupportedOperationException();
-	}
+	private final PromptService promptService;
 
 	@Transactional
 	public TomorrowFortuneResponse postDiary(Long userId, PostDiaryRequest request) {
 		User user = userRepository.findById(userId).orElseThrow();
 		user.addDiary(request);
+		new ChatMessage("system",
+						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender(), user.getAge()));
 		//gpt 내일의 운세 해석 request
 		// 내일의 운세 해석 결과 저장
 		return null;

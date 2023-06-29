@@ -13,14 +13,16 @@ import lombok.NoArgsConstructor;
 public class CompletionChatRequest {
 
 	private String model;
-	private String role;
-	private String message;
+	private List<ChatMessage> messages;
+	//	private String role;
+	//	private String message;
 	private Integer maxTokens;
-	
+
 	public static ChatCompletionRequest of(CompletionChatRequest request) {
 		return ChatCompletionRequest.builder()
 						.model(request.getModel())
-						.messages(convertChatMessage(request.getRole(), request.getMessage()))
+						//						.messages(convertChatMessage(request.getRole(), request.getMessage()))
+						.messages(request.getMessages())
 						.maxTokens(request.getMaxTokens())
 						.build();
 	}
