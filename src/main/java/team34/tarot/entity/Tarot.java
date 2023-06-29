@@ -27,7 +27,11 @@ public class Tarot {
 
 	private int number;
 
+	private String name;
+
 	private String discription;
+
+	private String fullDiscription;
 
 	@OneToOne(mappedBy = "tarot")
 	private TomorrowFortune tomorrowFortune;
