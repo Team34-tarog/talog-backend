@@ -8,4 +8,5 @@ public class PostDiaryRequest {
 
 	private LocalDate createdAt;
 	private String content;
+	private int cardNumber;
 }

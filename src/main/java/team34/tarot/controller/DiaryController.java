@@ -14,6 +14,7 @@ import team34.tarot.auth.CustomUserDetails;
 import team34.tarot.dto.request.PickTarotCardRequest;
 import team34.tarot.dto.request.PostDiaryRequest;
 import team34.tarot.dto.response.DiaryResponse;
+import team34.tarot.dto.response.TomorrowFortuneResponse;
 import team34.tarot.service.DiaryService;
 
 @RequiredArgsConstructor
@@ -24,11 +25,11 @@ public class DiaryController {
 	private final DiaryService diaryService;
 
 	@PostMapping("")
-	public void postDiary(@RequestBody PostDiaryRequest request) {
+	public TomorrowFortuneResponse postDiary(@RequestBody PostDiaryRequest request) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails userDetails = (CustomUserDetails) principal;
 		Long userId = (userDetails).getId();
-		diaryService.postDiary(userId, request);
+		return diaryService.postDiary(userId, request);
 	}
 
 	@PostMapping("/tomorrow-fortune")
