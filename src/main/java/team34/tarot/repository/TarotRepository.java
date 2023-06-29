@@ -9,4 +9,6 @@ import team34.tarot.entity.Tarot;
 public interface TarotRepository extends JpaRepository<Tarot, Long> {
 
 	List<Tarot> findAllByTarotCollectionId(Long id);
+
+	Tarot findByTarotCollectionIdAndNumber(Long id, int number);
 }

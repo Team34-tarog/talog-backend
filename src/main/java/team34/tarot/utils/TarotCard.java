@@ -1,7 +1,9 @@
 package team34.tarot.utils;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class TarotCard {
 

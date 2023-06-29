@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team34.tarot.utils.TarotCard;
 
 @Getter
 @NoArgsConstructor
@@ -41,4 +42,12 @@ public class Tarot {
 	@OneToOne(mappedBy = "tarot")
 	private TomorrowFortune tomorrowFortune;
 
+	public Tarot(TarotCollection tarotCollection, TarotCard tarotCard) {
+		this.tarotCollection = tarotCollection;
+		this.number = tarotCard.getNumber();
+		this.name = tarotCard.getName();
+		this.type = tarotCard.getType();
+		this.description = tarotCard.getDescription();
+		this.fullDescription = tarotCard.getFullDescription();
+	}
 }

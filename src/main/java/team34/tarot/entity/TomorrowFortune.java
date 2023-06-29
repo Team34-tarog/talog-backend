@@ -33,4 +33,9 @@ public class TomorrowFortune {
 
 	private LocalDateTime dateTime;
 
+	public TomorrowFortune(Diary diary, Tarot tarot) {
+		this.diary = diary;
+		this.tarot = tarot;
+		this.dateTime = LocalDateTime.now();
+	}
 }

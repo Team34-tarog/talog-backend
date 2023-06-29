@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team34.tarot.dto.request.PickTarotCardRequest;
 import team34.tarot.dto.request.PostDiaryRequest;
 import team34.tarot.service.DiaryService;
 
@@ -16,9 +17,14 @@ public class DiaryController {
 
 	private final DiaryService diaryService;
 
-	@PostMapping("{userId}")
+	@PostMapping("/{userId}")
 	public void postDiary(@PathVariable(name = "userId") Long userId, @RequestBody PostDiaryRequest request) {
 		diaryService.postDiary(userId, request);
+	}
+
+	@PostMapping("/tomorrow-fortune/{userId}")
+	public int pickTarotCard(@PathVariable(name = "userId") Long userId, @RequestBody PickTarotCardRequest request) {
+		return diaryService.pickTarotCard(userId, request);
 	}
 
 }
