@@ -29,7 +29,8 @@ public class PromptService {
 
 	public String userTomorrowFortuneInputPromptStr(String nickname, String cardName, String description) {
 		return String.format("Interpret tomorrow's fortune card in the following order\n" +
-										"1. Based on the [card name] and [description] below, interpret tomorrow's horoscope, taking into account the personality of %s as you know it from the [diaries] you've received so far.\n2. Write about overall interpretation in depth and with care.\n[card name] = %s\n[description] = %s",
+										"1. Based on the [card name] and [description] below, interpret tomorrow's horoscope, taking into account the personality of %s as you know it from the [diaries] you've received so far.\n2. Write about overall interpretation in depth and with care.\n"
+										+ "[card name] = \"%s\"\n[description] = \"%s\"",
 						nickname, cardName, description);
 	}
 
@@ -42,7 +43,7 @@ public class PromptService {
 
 	public String userAnswerForQuestion(String nickname, String question, String cardName1, String description1,
 					String cardName2, String description2, String cardName3, String description3) {
-		return String.format("Interpret tomorrow's fortune card in the following order\n"
+		return String.format("Interpret tarot cards in the following order\n"
 						+ "1. Understand the [question] at the bottom\n"
 						+ "2. Based on the [card names] and [descriptions] below, interpret the cards you chose according to the question in order, considering the nature of the %s you know from the [diaries] you have received so far.\n"
 						+ "3. Write about overall interpretation in depth and with care.\n"

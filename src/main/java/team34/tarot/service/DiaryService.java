@@ -2,10 +2,13 @@ package team34.tarot.service;
 
 import com.theokanning.openai.completion.chat.ChatMessage;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import team34.tarot.dto.gptdto.request.CompletionChatRequest;
 import team34.tarot.dto.request.PickTarotCardRequest;
 import team34.tarot.dto.request.PostDiaryRequest;
 import team34.tarot.dto.response.DiaryResponse;
@@ -33,16 +36,33 @@ public class DiaryService {
 	private final DiaryRepository diaryRepository;
 	private final TomorrowFortuneRepository tomorrowFortuneRepository;
 	private final PromptService promptService;
+	private final GPTService gptService;
 
 	@Transactional
 	public TomorrowFortuneResponse postDiary(Long userId, PostDiaryRequest request) {
 		User user = userRepository.findById(userId).orElseThrow();
 		user.addDiary(request);
-		new ChatMessage("system",
-						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender(), user.getAge()));
-		//gpt 내일의 운세 해석 request
-		// 내일의 운세 해석 결과 저장
-		return null;
+
+		List<ChatMessage> messages = new ArrayList<>();
+		messages.add(new ChatMessage("system",
+						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender().toString(),
+										user.getAge())));
+		List<Diary> diaryList = diaryRepository.findAllByUserIdOrderByCreatedAt(userId);
+		diaryList.forEach(diary -> {
+			messages.add(new ChatMessage("system",
+							promptService.systemDiaryCarefulInputPromptStr(diary.getCreatedAt(), user.getNickname())));
+			messages.add(new ChatMessage("system",
+							promptService.systemDiaryInputPromtStr(user.getNickname(), diary.getContent(),
+											user.getGender().toString(), diary.getCreatedAt())));
+		});
+		TarotCard tarotCard = TarotCardSetSingleton.getInstance().findTarotCardByNumber(request.getCardNumber());
+		messages.add(new ChatMessage("user", promptService.userTomorrowFortuneInputPromptStr(user.getNickname(),
+						tarotCard.getName(), tarotCard.getFullDescription())));
+		messages.add(new ChatMessage("user", promptService.userSummaryInputPromptStr(user.getNickname())));
+		messages.add(new ChatMessage("user", promptService.userTranslation()));
+		List<String> answer = gptService.gptCompletionChat(new CompletionChatRequest("gpt-3.5-turbo", messages));
+		System.out.println(messages.toString());
+		return new TomorrowFortuneResponse(answer);
 	}
 
 	@Transactional

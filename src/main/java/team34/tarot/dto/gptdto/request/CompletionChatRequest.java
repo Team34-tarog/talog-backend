@@ -16,14 +16,14 @@ public class CompletionChatRequest {
 	private List<ChatMessage> messages;
 	//	private String role;
 	//	private String message;
-	private Integer maxTokens;
+	//	private Integer maxTokens;
 
 	public static ChatCompletionRequest of(CompletionChatRequest request) {
 		return ChatCompletionRequest.builder()
 						.model(request.getModel())
 						//						.messages(convertChatMessage(request.getRole(), request.getMessage()))
 						.messages(request.getMessages())
-						.maxTokens(request.getMaxTokens())
+						//						.maxTokens(request.getMaxTokens())
 						.build();
 	}
 

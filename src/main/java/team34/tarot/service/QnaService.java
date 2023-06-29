@@ -33,14 +33,12 @@ public class QnaService {
 	@Transactional
 	public List<String> postQuestion(Long userId, PostQuestionRequest request) {
 		User user = userRepository.findById(userId).orElseThrow();
-		user.addQna(request);
 
 		List<ChatMessage> messages = new ArrayList<>();
 		messages.add(new ChatMessage("system",
-						promptService.systemChatUserInputPromptStr(user.getNickname(), "female", user.getAge())));
-		System.out.println("here1");
+						promptService.systemChatUserInputPromptStr(user.getNickname(), user.getGender().toString(),
+										user.getAge())));
 		List<Diary> diaryList = diaryRepository.findAllByUserIdOrderByCreatedAt(userId);
-		System.out.println("here2");
 		diaryList.forEach(diary -> {
 			messages.add(new ChatMessage("system",
 							promptService.systemDiaryCarefulInputPromptStr(diary.getCreatedAt(), user.getNickname())));
@@ -49,7 +47,6 @@ public class QnaService {
 											user.getGender().toString(), diary.getCreatedAt())));
 		});
 		TarotCard first = TarotCardSetSingleton.getInstance().findTarotCardByNumber(request.getFirstCardNumber());
-		System.out.println("here3");
 		TarotCard second = TarotCardSetSingleton.getInstance().findTarotCardByNumber(request.getSecondCardNumber());
 		TarotCard third = TarotCardSetSingleton.getInstance().findTarotCardByNumber(request.getThirdCardNumber());
 		messages.add(new ChatMessage("user", promptService.userAnswerForQuestion(user.getNickname(), request.getQuestion(),
@@ -57,8 +54,10 @@ public class QnaService {
 						first.getFullDescription(), second.getFullDescription(), third.getFullDescription())));
 		messages.add(new ChatMessage("user", promptService.userGetOverAll()));
 		messages.add(new ChatMessage("user", promptService.userTranslation()));
-		return gptService.gptCompletionChat(new CompletionChatRequest("gpt-3.5-turbo", messages, 2000));
-
+		List<String> answer = gptService.gptCompletionChat(new CompletionChatRequest("gpt-3.5-turbo", messages));
+		System.out.println(messages.toString());
+		user.addQna(request, answer.get(0));
+		return answer;
 	}
 
 	@Transactional

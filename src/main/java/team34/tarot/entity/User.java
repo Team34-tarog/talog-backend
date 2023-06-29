@@ -59,16 +59,18 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Qna> qnaList;
 
-	public void addDiary(PostDiaryRequest request) {
-		diaryList.add(new Diary(this, request.getCreatedAt(), request.getContent()));
+	public Diary addDiary(PostDiaryRequest request) {
+		Diary diary = new Diary(this, request.getCreatedAt(), request.getContent());
+		diaryList.add(diary);
+		return diary;
 	}
 
 	public void saveTarotCollection(TarotCollection tarotCollection) {
 		this.tarotCollection = tarotCollection;
 	}
 
-	public void addQna(PostQuestionRequest request) {
+	public void addQna(PostQuestionRequest request, String answer) {
 		qnaList.add(new Qna(this, request.getQuestion(), request.getFirstCardNumber(), request.getSecondCardNumber(),
-						request.getThirdCardNumber()));
+						request.getThirdCardNumber(), answer));
 	}
 }

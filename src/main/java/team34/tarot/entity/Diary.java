@@ -42,4 +42,8 @@ public class Diary {
 		this.createdAt = createdAt;
 		this.content = content;
 	}
+
+	public void addTomorrowFortune(TomorrowFortune tomorrowFortune) {
+		this.tomorrowFortune = tomorrowFortune;
+	}
 }
