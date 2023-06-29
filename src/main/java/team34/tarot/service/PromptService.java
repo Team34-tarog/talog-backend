@@ -1,20 +1,38 @@
 package team34.tarot.service;
 
+import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import org.springframework.stereotype.Service;
 import team34.tarot.dto.request.DiaryInputPromptRequest;
 import team34.tarot.dto.request.UserInputPromptRequest;
+
+import java.time.LocalDateTime;
 
 @Service
 public class PromptService {
 
 
-	//사람 입력 프롬프트 함수 (스트링 반환)
-	public String systemChatUserInput(UserInputPromptRequest request) {
-		String s = "+, gender: " + request.getGender() + ", and age range: " + request.getAge()
-						+ ". As a tarot reader, you need to understand the personality of your tarot customer and answer them to the best of your ability.Finally, all questions are written in PlainTEXT only. Don't use any markdown syntax.";
-		return s;
-	}
+    //사람 입력 프롬프트 함수 (스트링 반환)
+    public String systemChatUserInputPromptStr(String nickname, String gender, int age) {
+        return String.format("You will act as an expert Tarot Card reader. A tarot customer is a person with name: %s, gender: %s, and age range: %d. As a tarot reader, you need to understand the personality of your tarot customer and answer them to the best of your ability. \nFinally, all questions are written in PlainTEXT only. Don't use any markdown syntax.",
+                nickname, gender, age);
+    }
 
+    public String systemDiaryCarefulInputPromptStr(LocalDateTime date, String nickname) {
+        return String.format("Today is %s. In tarot readings and diaries, the date is an important element. Always check it.\n\nWhen you incorporate your [diary] into a tarot reading, you should do so in date order. The further away from today, the lower the percentage in tarot reading.\n\nWhen interpreting tarot readings based on a [diary] that yields similar results, it is important not to overlook the events experienced by %s.",
+                date, nickname);
+
+    }
+
+    public String systemDiaryInputPromtStr(String nickname, String content, String gender, LocalDateTime date) {
+        return String.format("The following is a [diary] written on %s by %s. Analyze the contents of the [diary] to remember how %s was feeling and what %s was going through, which you must then incorporate into your tarot reading. [diary] = %s",
+                date, nickname, nickname, gender);
+    }
+
+    public String userTomorrowFortuneInputPromptStr(String nickname, String cardName, String description) {
+        return String.format("Interpret tomorrow's fortune card in the following order\n" +
+                "1. Based on the [card name] and [description] below, interpret tomorrow's horoscope, taking into account the personality of %s as you know it from the [diaries] you've received so far.\n2. Write about overall interpretation in depth and with care.\n[card name] = %s\n[description] = %s",
+                nickname, cardName, description);
+    }
 	public String systemDiaryInput(DiaryInputPromptRequest request) {
 		String str = "The following is a [diary] written on " + request.getCreatedAt() + " by " + request.getNickname()
 						+ ". Analyze the contents of the [diary] to remember how " + request.getNickname() + "was feeling and what "
@@ -51,6 +69,10 @@ public class PromptService {
 						+ "}", nickname, question, cardName1, cardName2, cardName3, description1, description2, description3);
 	}
 
+    public String userSummaryInputPromptStr(String username) {
+        return String.format("Reduce your interpretation to 500 characters, focusing on %s's personal experiences and personality.",
+                username);
+    }
 	public String userGetOverAll() {
 		return "Print only the overall interpretation.";
 	}
