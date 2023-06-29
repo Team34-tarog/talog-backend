@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team34.tarot.utils.TarotCard;
 
 @Getter
 @NoArgsConstructor
@@ -31,4 +32,13 @@ public class TarotCollection {
 	@OneToMany(mappedBy = "tarotCollection", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Tarot> tarotList = new ArrayList<>();
 
+	public TarotCollection(User user) {
+		this.user = user;
+	}
+
+	public Tarot addTarotList(TarotCard tarotCard) {
+		Tarot tarot = new Tarot(this, tarotCard);
+		tarotList.add(tarot);
+		return tarot;
+	}
 }
