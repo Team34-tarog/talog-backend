@@ -3,26 +3,18 @@ package team34.tarot.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.Setter;
+import team34.tarot.dto.request.PostDiaryRequest;
+import team34.tarot.dto.request.PostQuestionRequest;
 
-@Builder
 @Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "user")
 @Entity
 public class User {
@@ -47,7 +39,6 @@ public class User {
 	private Gender gender;
 
 	//	created_at DATETIME
-	@CreatedDate
 	private LocalDateTime createdAt;
 
 	@Enumerated(EnumType.STRING)
@@ -56,6 +47,22 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
 	private List<Diary> diaryList;
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private TarotCollection tarotCollection;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Qna> qnaList;
+
+	public void addDiary(PostDiaryRequest request) {
+		diaryList.add(new Diary(this, request.getCreatedAt(), request.getContent()));
+	}
+
+	public void saveTarotCollection(TarotCollection tarotCollection) {
+		this.tarotCollection = tarotCollection;
+	}
+
+	public void addQna(PostQuestionRequest request) {
+		qnaList.add(new Qna(this, request.getQuestion(), request.getFirstCardNumber(), request.getSecondCardNumber(),
+				request.getThirdCardNumber()));
+	}
 }

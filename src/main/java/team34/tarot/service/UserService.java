@@ -25,14 +25,13 @@ public class UserService {
     }
 
     public void join(SignupDto request) {
-        User user = User.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .nickname(request.getNickname())
-                .role(Role.USER)
-                .gender(Gender.valueOf(request.getGender()))
-                .age(request.getAge())
-                .build();
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setNickname(request.getNickname());
+        user.setRole(Role.USER);
+        user.setGender(Gender.valueOf(request.getGender()));
+        user.setAge(request.getAge());
         userRepository.save(user);
 
     }
