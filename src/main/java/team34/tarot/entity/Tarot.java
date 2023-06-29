@@ -1,5 +1,6 @@
 package team34.tarot.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,9 +29,13 @@ public class Tarot {
 	private int number;
 
 	private String name;
+	
+	private String type;
 
+	@Column(columnDefinition = "TEXT")
 	private String discription;
 
+	@Column(columnDefinition = "TEXT")
 	private String fullDiscription;
 
 	@OneToOne(mappedBy = "tarot")
